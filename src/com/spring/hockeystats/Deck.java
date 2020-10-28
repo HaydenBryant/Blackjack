@@ -5,6 +5,7 @@ import java.util.Collections;
 
 public class Deck {
     protected ArrayList<Card> deck;
+    protected int iterator = 0;
 
     public Deck(){
         ArrayList<Card> deck = new ArrayList<>();
@@ -25,6 +26,12 @@ public class Deck {
 
     public void shuffle(){
         Collections.shuffle(deck);
+    }
+
+    public Card drawCard(){
+        Card card = deck.get(iterator);
+        iterator++;
+        return card;
     }
 
     @Override
