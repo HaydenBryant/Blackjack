@@ -8,6 +8,18 @@ public class Blackjack {
     private Deck deck;
     Scanner scan = new Scanner(System.in);
 
+    public void game(){
+        while (true){
+            System.out.println("Would you like to play blackjack y or n?: ");
+            String ans = scan.nextLine().toLowerCase();
+            if (ans.contains("y")){
+                setupGame();
+                hitStay();
+            }
+            break;
+        }
+    }
+
     public void setupGame(){
         deck = new Deck();
         player = new Player(new Hand());
@@ -54,27 +66,47 @@ public class Blackjack {
     }
 
     public void dealerPlay(){
-        if(dealer.getTotal() < 17){
-
+        while(dealer.getTotal() < 17){
+            dealer.addCard(deck.drawCard());
         }
     }
 
     public void hitStay(){
-        System.out.println("Player has " + player.handString());
-        System.out.println("For a total of " + player.getTotal());
 
         while(true) {
+            System.out.println("Player has " + player.handString());
+            System.out.println("For a total of " + player.getTotal());
             System.out.println("Would you like to hit y or n: ");
-            String hitAns = scan.nextLine();
+            String hitAns = scan.nextLine().toLowerCase();
             if (hitAns.contains("y")) {
                 player.addCard(deck.drawCard());
                 if(checkBust(player)){
                     System.out.println("Player has busted.");
-                    break;
+                    System.out.println("Dealer wins");
+                    return;
                 }
             }
             break;
         }
+        dealerPlay();
+        if(checkBust(dealer)){
+            System.out.println("Dealer has busted.");
+            System.out.println("Player wins");
+            return;
+        }
 
+        if(checkWin() == dealer){
+            System.out.println("Dealer wins this hand");
+        } else {
+            System.out.println("Player wins this hand");
+        }
+
+    }
+
+    public Players checkWin(){
+        if(player.getTotal() > dealer.getTotal()){
+            return player;
+        }
+        return dealer;
     }
 }

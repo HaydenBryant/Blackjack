@@ -5,8 +5,13 @@ public class Card {
     protected String suit;
 
     public Card(int value, String suit){
-        this.value = value;
         this.suit = suit;
+
+        if(value > 10){
+            this.value = 10;
+        } else {
+            this.value = value;
+        }
     }
 
     public int getValue() {
