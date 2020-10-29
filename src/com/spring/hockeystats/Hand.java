@@ -20,4 +20,13 @@ public class Hand {
     public void clearHand(){
         hand = new ArrayList<Card>();
     }
+
+    @Override
+    public String toString() {
+        String string = "";
+        for(Card card : hand){
+            string += card.toString();
+        }
+        return string;
+    }
 }

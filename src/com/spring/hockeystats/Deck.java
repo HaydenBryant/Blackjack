@@ -5,7 +5,7 @@ import java.util.Collections;
 
 public class Deck {
     protected ArrayList<Card> deck;
-    protected int iterator = 0;
+    protected int iterator = 1;
 
     public Deck(){
         ArrayList<Card> deck = new ArrayList<>();

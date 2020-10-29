@@ -5,10 +5,8 @@ public class Main {
 
     public static void main(String[] args) {
 	// write your code here
-        Deck deck = new Deck();
-
-        deck.toString();
-        deck.shuffle();
-        deck.toString();
+        Blackjack blackjack = new Blackjack();
+        blackjack.setupGame();
+        blackjack.hitStay();
     }
 }

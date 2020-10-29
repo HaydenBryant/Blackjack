@@ -3,6 +3,10 @@ package com.spring.hockeystats;
 public class Dealer implements Players{
     protected Hand hand;
 
+    public Dealer(Hand hand) {
+        this.hand = hand;
+    }
+
 
 
     @Override
@@ -14,7 +18,7 @@ public class Dealer implements Players{
     }
 
     @Override
-    public void hit(Card card) {
+    public void addCard(Card card) {
         hand.addCard(card);
     }
 
