@@ -5,6 +5,11 @@ import java.util.ArrayList;
 public class Hand {
     protected ArrayList<Card> hand;
 
+    public Hand() {
+        ArrayList<Card> hand = new ArrayList<>();
+        this.hand = hand;
+    }
+
     public int getHandValue(){
         int total = 0;
         for(Card card : hand){
@@ -26,6 +31,7 @@ public class Hand {
         String string = "";
         for(Card card : hand){
             string += card.toString();
+            string += " ";
         }
         return string;
     }

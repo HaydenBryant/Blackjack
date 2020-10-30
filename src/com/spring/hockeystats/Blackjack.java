@@ -15,8 +15,9 @@ public class Blackjack {
             if (ans.contains("y")){
                 setupGame();
                 hitStay();
+            } else {
+                break;
             }
-            break;
         }
     }
 
