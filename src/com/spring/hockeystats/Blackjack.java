@@ -40,6 +40,7 @@ public class Blackjack {
         player.addCard(deck.drawCard());
         dealer.addCard(deck.drawCard());
         dealer.addCard(deck.drawCard());
+        checkBlackjack();
     }
 
     public void checkBlackjack(){
@@ -86,8 +87,9 @@ public class Blackjack {
                     System.out.println("Dealer wins");
                     return;
                 }
+            } else {
+                break;
             }
-            break;
         }
         dealerPlay();
         if(checkBust(dealer)){
@@ -95,6 +97,9 @@ public class Blackjack {
             System.out.println("Player wins");
             return;
         }
+
+        System.out.println("Dealer has " + dealer.hand.toString()+ " for a total " + dealer.getTotal());
+        System.out.println("Player has " + player.hand.toString()+ " for a total " + player.getTotal());
 
         if(checkWin() == dealer){
             System.out.println("Dealer wins this hand");
