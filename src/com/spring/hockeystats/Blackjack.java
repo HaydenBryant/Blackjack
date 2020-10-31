@@ -78,8 +78,14 @@ public class Blackjack {
             }
             newDeal();
         }
-        if (player.isBlackjack()){
-            System.out.println("Player has Blackjack");
+        Boolean playerBlackjack = false;
+        for(Player player : playerList) {
+            if (player.isBlackjack()) {
+                System.out.println( player.getName() + " has Blackjack");
+                playerBlackjack = true;
+            }
+        }
+        if (playerBlackjack){
             newDeal();
         }
     }
@@ -99,20 +105,22 @@ public class Blackjack {
 
     public void hitStay(){
 
-        while(true) {
-            System.out.println("Player has " + player.handString());
-            System.out.println("For a total of " + player.getTotal());
-            System.out.println("Would you like to hit y or n: ");
-            String hitAns = scan.nextLine().toLowerCase();
-            if (hitAns.contains("y")) {
-                player.addCard(deck.drawCard());
-                if(checkBust(player)){
-                    System.out.println("Player has busted.");
-                    System.out.println("Dealer wins");
-                    return;
+        for(Player player : playerList) {
+            while (true) {
+                System.out.println( player.getName() + " has " + player.handString());
+                System.out.println("For a total of " + player.getTotal());
+                System.out.println("Would you like to hit y or n: ");
+                String hitAns = scan.nextLine().toLowerCase();
+                if (hitAns.contains("y")) {
+                    player.addCard(deck.drawCard());
+                    if (checkBust(player)) {
+                        System.out.println("Player has busted.");
+
+                        break;
+                    }
+                } else {
+                    break;
                 }
-            } else {
-                break;
             }
         }
         dealerPlay();
