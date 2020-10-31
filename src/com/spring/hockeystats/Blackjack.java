@@ -1,11 +1,13 @@
 package com.spring.hockeystats;
 
+import java.util.ArrayList;
 import java.util.Scanner;
 
 public class Blackjack {
     private Player player;
     private Dealer dealer;
     private Deck deck;
+    private ArrayList<Player> playerList;
     Scanner scan = new Scanner(System.in);
 
     public void game(){
@@ -23,7 +25,7 @@ public class Blackjack {
 
     public void setupGame(){
         deck = new Deck();
-        player = new Player(new Hand());
+        generatePlayers();
         dealer = new Dealer(new Hand());
         deck.shuffle();
 
@@ -31,6 +33,28 @@ public class Blackjack {
         player.addCard(deck.drawCard());
         dealer.addCard(deck.drawCard());
         dealer.addCard(deck.drawCard());
+    }
+
+    public void generatePlayers() {
+        ArrayList<Player> playerList = new ArrayList<>();
+        System.out.println("What is this players name?: ");
+        String name = scan.nextLine();
+        Player player = new Player(new Hand(), name);
+        playerList.add(player);
+        String addPlayer;
+        while (true){
+            System.out.println("Would you like to add another player y or n?");
+            addPlayer = scan.nextLine();
+            if(addPlayer.toLowerCase().contains("y")) {
+                System.out.println("What is this players name?: ");
+                String playerName = scan.nextLine();
+                Player newPlayer = new Player(new Hand(), playerName);
+                playerList.add(newPlayer);
+                continue;
+            }
+            break;
+        }
+        this.playerList = playerList;
     }
 
     public void newDeal(){

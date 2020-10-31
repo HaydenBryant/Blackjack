@@ -2,8 +2,9 @@ package com.spring.hockeystats;
 
 public class Player implements Players{
     protected Hand hand;
+    protected String name;
 
-    public Player(Hand hand) {
+    public Player(Hand hand, String name) {
         this.hand = hand;
     }
 
@@ -35,5 +36,9 @@ public class Player implements Players{
     @Override
     public void clearHand() {
         hand.clearHand();
+    }
+
+    public String getName(){
+        return this.name;
     }
 }
