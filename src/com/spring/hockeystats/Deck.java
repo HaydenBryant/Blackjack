@@ -10,16 +10,16 @@ public class Deck {
     public Deck(){
         ArrayList<Card> deck = new ArrayList<>();
         for(int i = 1; i <= 13; i++){
-            deck.add(new Card(i, "H"));
+            deck.add(new Card(i, i, "H"));
         }
         for(int i = 1; i <= 13; i++){
-            deck.add(new Card(i, "D"));
+            deck.add(new Card(i, i, "D"));
         }
         for(int i = 1; i <= 13; i++){
-            deck.add(new Card(i, "S"));
+            deck.add(new Card(i, i, "S"));
         }
         for(int i = 1; i <= 13; i++){
-            deck.add(new Card(i, "C"));
+            deck.add(new Card(i, i, "C"));
         }
         this.deck = deck;
     }
