@@ -113,7 +113,7 @@ public class Blackjack {
                 String hitAns = scan.nextLine().toLowerCase();
                 if (hitAns.contains("y")) {
                     player.addCard(deck.drawCard());
-                    if (checkBust(player)) {
+                    if (checkBust(player) && !aceCheck(player)) {
                         System.out.println("Player has busted.");
 
                         break;
@@ -138,7 +138,23 @@ public class Blackjack {
         } else {
             System.out.println("Player wins this hand");
         }
+    }
 
+    public Boolean aceCheck(Player player){
+        for(Card card : player.hand.hand){
+            if(card.getNumber() == 1){
+                return true;
+            }
+        }
+        return false;
+    }
+
+    public void handleAce(Player player){
+        for(Card card : player.hand.hand){
+            if(card.getNumber() == 1){
+                card.value = 1;
+            }
+        }
     }
 
     public Players checkWin(){

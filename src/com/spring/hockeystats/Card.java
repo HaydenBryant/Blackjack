@@ -11,6 +11,8 @@ public class Card {
 
         if(value > 10){
             this.value = 10;
+        } else if (value == 1){
+            this.value = 11;
         } else {
             this.value = value;
         }
@@ -18,6 +20,10 @@ public class Card {
 
     public int getValue() {
         return value;
+    }
+
+    public int getNumber(){
+        return number;
     }
 
     public String getSuit() {
