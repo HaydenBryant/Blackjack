@@ -3,10 +3,12 @@ package com.spring.hockeystats;
 public class Player implements Players{
     protected Hand hand;
     protected String name;
+    protected Boolean busted;
 
     public Player(Hand hand, String name) {
         this.hand = hand;
         this.name = name;
+        this.busted = false;
     }
 
     @Override
@@ -17,6 +19,9 @@ public class Player implements Players{
         return false;
     }
 
+    public Boolean getBusted(){
+        return busted;
+    }
 
     @Override
     public void addCard(Card card) {
