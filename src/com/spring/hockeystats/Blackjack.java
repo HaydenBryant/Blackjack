@@ -17,12 +17,14 @@ public class Blackjack {
                 hitStay(player);
             }
         }
+        dealerPlay();
+        findWinner();
         while (true) {
             System.out.println("Would you like to play again y or n?: ");
             String ans = scan.nextLine().toLowerCase();
             if (ans.contains("y")) {
                 newDeal();
-                if (checkBlackjack()){
+                if (checkBlackjack()) {
                     continue;
                 }
                 for (Player player : playerList) {
@@ -106,7 +108,7 @@ public class Blackjack {
             }
         }
 
-        if (playerBlackjack && dealerBlackjack){
+        if (playerBlackjack && dealerBlackjack) {
             System.out.println("Push");
             return true;
         }
@@ -136,6 +138,9 @@ public class Blackjack {
     }
 
     public void hitStay(Player player) {
+        if (checkBust(player)) {
+            handleAce(player);
+        }
         while (true) {
             System.out.println(player.getName() + " has " + player.handString());
             System.out.println("For a total of " + player.getTotal());
@@ -145,13 +150,13 @@ public class Blackjack {
                 player.addCard(deck.drawCard());
                 if (checkBust(player)) {
                     if (!aceCheck(player)) {
-                        System.out.println(player.getName() + " has busted.");
+                        System.out.println(player.getName() + " has busted");
                         player.busted = true;
                         return;
                     } else {
                         handleAce(player);
                         if (checkBust(player)) {
-                            System.out.println(player.getName() + " has busted.");
+                            System.out.println(player.getName() + " has busted");
                             player.busted = true;
                             return;
                         } else {
@@ -159,32 +164,44 @@ public class Blackjack {
                         }
                     }
                 } else {
-                    break;
+                    continue;
                 }
+            } else {
+                return;
             }
         }
     }
 
-    public void findWinner(){
-        Player bestHand = playerList.get(0);
-        for(Player player : playerList){
-            if(player.getBusted()){
+    public void findWinner() {
+        ArrayList<Player> winnerList = new ArrayList<>();
+        int bestHand = playerList.get(0).getTotal();
+        for (Player player : playerList) {
+            if (player.getBusted()) {
                 continue;
             }
             System.out.println(player.getName() + " has " + player.handString() + " for a total of " + player.getTotal());
-            if(player.getTotal() > bestHand.getTotal()){
-                bestHand = player;
+            if (player.getTotal() > bestHand) {
+                bestHand = player.getTotal();
+                winnerList.clear();
+                winnerList.add(player);
+                continue;
+            }
+            if (player.getTotal() == bestHand) {
+                winnerList.add(player);
+                continue;
             }
         }
 
-        if(!dealer.getBusted()){
+        if (!dealer.getBusted()) {
             System.out.println("Dealers hand is " + dealer.handString() + " for a total of " + dealer.getTotal());
-            if(dealer.getTotal() > bestHand.getTotal()){
+            if (dealer.getTotal() >= bestHand) {
                 System.out.println("Dealer has the best hand");
                 return;
             }
         }
-        System.out.println(bestHand.getName() + " has the best hand");
+        for (Player player : winnerList) {
+            System.out.println(player.getName() + " wins this hand with " + bestHand);
+        }
     }
 
     public Boolean aceCheck(Player player) {
@@ -198,7 +215,7 @@ public class Blackjack {
 
     public void handleAce(Player player) {
         for (Card card : player.hand.hand) {
-            if (card.getNumber() == 1) {
+            if (card.getNumber() == 1 && card.value != 1) {
                 card.value = 1;
                 break;
             }
