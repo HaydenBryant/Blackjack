@@ -11,11 +11,13 @@ public class Blackjack {
     Scanner scan = new Scanner(System.in);
 
     public void game(){
+        setupGame();
+        hitStay();
         while (true){
-            System.out.println("Would you like to play blackjack y or n?: ");
+            System.out.println("Would you like to play again y or n?: ");
             String ans = scan.nextLine().toLowerCase();
             if (ans.contains("y")){
-                setupGame();
+                newDeal();
                 hitStay();
             } else {
                 break;
@@ -28,11 +30,13 @@ public class Blackjack {
         generatePlayers();
         dealer = new Dealer(new Hand());
         deck.shuffle();
-
-        player.addCard(deck.drawCard());
-        player.addCard(deck.drawCard());
+        for(Player player : playerList){
+            player.addCard(deck.drawCard());
+            player.addCard(deck.drawCard());
+        }
         dealer.addCard(deck.drawCard());
         dealer.addCard(deck.drawCard());
+        checkBlackjack();
     }
 
     public void generatePlayers() {
@@ -58,12 +62,21 @@ public class Blackjack {
     }
 
     public void newDeal(){
-        player.clearHand();
+        if(deck.getIterator() < 26){
+            deck.shuffle();
+            System.out.println("New shuffle");
+        }
+
         dealer.clearHand();
-        player.addCard(deck.drawCard());
-        player.addCard(deck.drawCard());
         dealer.addCard(deck.drawCard());
         dealer.addCard(deck.drawCard());
+
+        for(Player player : playerList){
+            player.clearHand();
+            player.addCard(deck.drawCard());
+            player.addCard(deck.drawCard());
+        }
+
         checkBlackjack();
     }
 
@@ -76,8 +89,9 @@ public class Blackjack {
             } else {
                 System.out.println("Player loses");
             }
-            newDeal();
+
         }
+
         Boolean playerBlackjack = false;
         for(Player player : playerList) {
             if (player.isBlackjack()) {
@@ -98,7 +112,9 @@ public class Blackjack {
     }
 
     public void dealerPlay(){
+        System.out.println("Dealers turn");
         while(dealer.getTotal() < 17){
+            System.out.println("Dealer hits");
             dealer.addCard(deck.drawCard());
         }
     }
@@ -113,10 +129,21 @@ public class Blackjack {
                 String hitAns = scan.nextLine().toLowerCase();
                 if (hitAns.contains("y")) {
                     player.addCard(deck.drawCard());
-                    if (checkBust(player) && !aceCheck(player)) {
-                        System.out.println("Player has busted.");
-
-                        break;
+                    if (checkBust(player)) {
+                        if(!aceCheck(player)) {
+                            System.out.println("Player has busted.");
+                            System.out.println("Dealer wins");
+                            return;
+                        } else {
+                            handleAce(player);
+                            if(checkBust(player)){
+                                System.out.println("Player has busted.");
+                                System.out.println("Dealer wins");
+                                return;
+                            } else {
+                                continue;
+                            }
+                        }
                     }
                 } else {
                     break;
@@ -131,7 +158,9 @@ public class Blackjack {
         }
 
         System.out.println("Dealer has " + dealer.hand.toString()+ " for a total " + dealer.getTotal());
-        System.out.println("Player has " + player.hand.toString()+ " for a total " + player.getTotal());
+        for(Player player : playerList) {
+            System.out.println(player.getName() +" has " + player.hand.toString() + " for a total " + player.getTotal());
+        }
 
         if(checkWin() == dealer){
             System.out.println("Dealer wins this hand");
@@ -153,13 +182,16 @@ public class Blackjack {
         for(Card card : player.hand.hand){
             if(card.getNumber() == 1){
                 card.value = 1;
+                break;
             }
         }
     }
 
     public Players checkWin(){
-        if(player.getTotal() > dealer.getTotal()){
-            return player;
+        for (Player player : playerList) {
+            if (player.getTotal() > dealer.getTotal()) {
+                return player;
+            }
         }
         return dealer;
     }

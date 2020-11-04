@@ -26,6 +26,11 @@ public class Deck {
 
     public void shuffle(){
         Collections.shuffle(deck);
+        iterator = 0;
+    }
+
+    public int getIterator(){
+        return iterator;
     }
 
     public Card drawCard(){

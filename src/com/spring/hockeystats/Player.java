@@ -6,6 +6,7 @@ public class Player implements Players{
 
     public Player(Hand hand, String name) {
         this.hand = hand;
+        this.name = name;
     }
 
     @Override
