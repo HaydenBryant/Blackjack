@@ -1,9 +1,11 @@
 package com.spring.hockeystats;
 
+import java.util.ArrayList;
+
 public class Player implements Players{
-    protected Hand hand;
-    protected String name;
-    protected Boolean busted;
+    private Hand hand;
+    private String name;
+    private Boolean busted;
 
     public Player(Hand hand, String name) {
         this.hand = hand;
@@ -20,7 +22,11 @@ public class Player implements Players{
     }
 
     public Boolean getBusted(){
-        return busted;
+        return this.busted;
+    }
+
+    public void setBusted(Boolean busted){
+        this.busted = busted;
     }
 
     @Override
@@ -38,6 +44,9 @@ public class Player implements Players{
         return hand.getHandValue();
     }
 
+    public ArrayList<Card> getHand(){
+        return hand.getHand();
+    }
 
     @Override
     public void clearHand() {

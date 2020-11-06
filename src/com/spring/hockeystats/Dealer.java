@@ -1,8 +1,8 @@
 package com.spring.hockeystats;
 
 public class Dealer implements Players{
-    protected Hand hand;
-    protected Boolean busted;
+    private Hand hand;
+    private Boolean busted;
 
     public Dealer(Hand hand) {
         this.hand = hand;
@@ -11,6 +11,10 @@ public class Dealer implements Players{
 
     public Boolean getBusted(){
         return busted;
+    }
+
+    public void setBusted(Boolean busted){
+        this.busted = busted;
     }
 
     @Override

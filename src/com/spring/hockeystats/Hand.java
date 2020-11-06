@@ -3,11 +3,15 @@ package com.spring.hockeystats;
 import java.util.ArrayList;
 
 public class Hand {
-    protected ArrayList<Card> hand;
+    private ArrayList<Card> hand;
 
     public Hand() {
         ArrayList<Card> hand = new ArrayList<>();
         this.hand = hand;
+    }
+
+    public ArrayList<Card> getHand(){
+        return hand;
     }
 
     public int getHandValue(){

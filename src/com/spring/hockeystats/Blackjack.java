@@ -81,13 +81,13 @@ public class Blackjack {
         }
 
         dealer.clearHand();
-        dealer.busted = false;
+        dealer.setBusted(false);
         dealer.addCard(deck.drawCard());
         dealer.addCard(deck.drawCard());
 
         for (Player player : playerList) {
             player.clearHand();
-            player.busted = false;
+            player.setBusted(false);
             player.addCard(deck.drawCard());
             player.addCard(deck.drawCard());
         }
@@ -133,7 +133,7 @@ public class Blackjack {
         }
         if (checkBust(dealer)) {
             System.out.println("Dealer has busted.");
-            dealer.busted = true;
+            dealer.setBusted(true);
         }
     }
 
@@ -151,13 +151,13 @@ public class Blackjack {
                 if (checkBust(player)) {
                     if (!aceCheck(player)) {
                         System.out.println(player.getName() + " has busted");
-                        player.busted = true;
+                        player.setBusted(true);
                         return;
                     } else {
                         handleAce(player);
                         if (checkBust(player)) {
                             System.out.println(player.getName() + " has busted");
-                            player.busted = true;
+                            player.setBusted(true);
                             return;
                         } else {
                             continue;
@@ -174,7 +174,7 @@ public class Blackjack {
 
     public void findWinner() {
         ArrayList<Player> winnerList = new ArrayList<>();
-        int bestHand = playerList.get(0).getTotal();
+        int bestHand = 0;
         for (Player player : playerList) {
             if (player.getBusted()) {
                 continue;
@@ -205,7 +205,7 @@ public class Blackjack {
     }
 
     public Boolean aceCheck(Player player) {
-        for (Card card : player.hand.hand) {
+        for (Card card : player.getHand()) {
             if (card.getNumber() == 1) {
                 return true;
             }
@@ -214,9 +214,9 @@ public class Blackjack {
     }
 
     public void handleAce(Player player) {
-        for (Card card : player.hand.hand) {
-            if (card.getNumber() == 1 && card.value != 1) {
-                card.value = 1;
+        for (Card card : player.getHand()) {
+            if (card.getNumber() == 1 && card.getValue() != 1) {
+                card.handleAce();
                 break;
             }
         }

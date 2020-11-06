@@ -1,9 +1,9 @@
 package com.spring.hockeystats;
 
 public class Card {
-    protected int value;
-    protected int number;
-    protected String suit;
+    private int value;
+    private int number;
+    private String suit;
 
     public Card(int value, int number, String suit){
         this.suit = suit;
@@ -16,6 +16,10 @@ public class Card {
         } else {
             this.value = value;
         }
+    }
+
+    public void handleAce(){
+        value = 1;
     }
 
     public int getValue() {
